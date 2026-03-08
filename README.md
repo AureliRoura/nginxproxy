@@ -55,10 +55,16 @@ The dashboard will be available at `http://192.168.2.9`.
 
 ### Update configuration
 
-After editing `nginx.conf` or `index.html`, copy the updated files and reload nginx:
+The container mounts files directly from `/opt/nginx/` on the host. After editing `nginx.conf` or `index.html` in this repo, copy the updated files to the host mount path and reload nginx — no container restart needed:
 
 ```bash
 cp nginx/nginx.conf /opt/nginx/nginx.conf
 cp nginx/index.html /opt/nginx/index.html
 docker exec nginx-proxy nginx -s reload
+```
+
+If you change `docker-compose.yaml` itself (e.g. ports, volumes, image), recreate the container:
+
+```bash
+docker compose up -d --force-recreate
 ```
